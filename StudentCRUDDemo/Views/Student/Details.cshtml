@@ -1,0 +1,51 @@
+﻿@model StudentCRUDDemo.Models.Student
+
+@{
+    ViewBag.Title = "Details";
+}
+
+ 
+<div>
+    <h2>Student Details</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Percentage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Percentage)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @{
+        var userRole = Session["Role"] != null ? Convert.ToInt32(Session["Role"]) : 0;
+        if (userRole == 1)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.StudentId }, new { @class = "btn btn-primary" })
+        }
+        else
+        {
+            <button class="btn btn-primary" disabled="disabled">Edit</button>
+        }
+    }
+    @Html.ActionLink("Go to List", "Index", null, new { @class = "btn btn-primary" })
+</p>

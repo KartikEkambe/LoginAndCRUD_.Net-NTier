@@ -1,0 +1,96 @@
+﻿@model IEnumerable<StudentCRUDDemo.Models.Student>
+
+@{
+    ViewBag.Title = "Index";
+     Response.Cache.SetCacheability(HttpCacheability.NoCache);
+    Response.Cache.SetExpires(DateTime.Now.AddSeconds(-1));
+    Response.Cache.SetNoStore();
+}
+
+
+
+<h2 class="text-center">StudentList</h2>
+<style>
+    .custom-dark-header {
+        background-color: rgb(56,56,56);
+        color: white;
+    }
+
+        .custom-dark-header:hover {
+            background-color: #404040;
+            color: aliceblue;
+        }
+</style>
+
+<p>
+    @{
+        var userRole = Session["Role"] != null ? Convert.ToInt32(Session["Role"]) : 0;
+        if (userRole == 1)
+        {
+            @Html.ActionLink("Add Student", "Create", null, new { @class = "btn btn-primary btn-lg active" })
+        }
+        else
+        {
+            <button class="btn btn-primary" disabled="disabled">Add Student</button>
+        }
+    }
+</p>
+<div style="max-height: 400px; overflow-y: auto;">
+
+
+    <table class="table table-hover">
+        <thead class="custom-dark-header">
+
+
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Department)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Percentage)
+                </th>
+                <th> <span style="margin-left:55px">Action</span></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Percentage)
+                    </td>
+                    <td>
+                        @{
+
+                            if (userRole == 1)
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.StudentId }, new { @class = "btn btn-primary", style = "margin-right:5px" })
+
+                                @Html.ActionLink("Details", "Details", new { id = item.StudentId }, new { @class = "btn btn-info", style = "margin-right:5px" })
+
+                                @Html.ActionLink("Delete", "Delete", new { id = item.StudentId }, new { @class = "btn btn-danger" })
+                            }
+                            else
+                            {
+                                <button class="btn btn-primary" disabled="disabled">Edit</button>
+                                @Html.ActionLink("Details", "Details", new { id = item.StudentId }, new { @class = "btn btn-info" })
+                                <button class="btn btn-danger" disabled="disabled">Delete</button>
+                            }
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
