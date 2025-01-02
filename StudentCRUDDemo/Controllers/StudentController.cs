@@ -34,6 +34,7 @@ namespace StudentCRUDDemo.Controllers
              
         }
 
+// Get Details Of student By ID
         public ActionResult Details(int id)
         {
             var std = _studentService.GetStudentById(id);
